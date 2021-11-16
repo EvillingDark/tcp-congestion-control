@@ -9,14 +9,14 @@ class SingleSwitchTopo(Topo):
         Topo.__init__(self, **opts)
         h1 = self.addHost('h1', cpu=.5/n)
         h2 = self.addHost('h2', cpu=.5/n)
-        self.addLink(h2, h1, bw=200, delay='20ms', loss=1)
+        self.addLink(h2, h1, bw=200, delay='100ms', loss=1)
 
 def perfTest():
     topo = SingleSwitchTopo(n=2)
     net = Mininet(topo=topo,host=CPULimitedHost, link=TCLink)
     net.start()
     h1, h2 = net.get('h1', 'h2')
-    net.iperf((h1, h2))
+    net.iperf((h1, h2), seconds=60)
     net.stop()
 
 if __name__=='__main__':
